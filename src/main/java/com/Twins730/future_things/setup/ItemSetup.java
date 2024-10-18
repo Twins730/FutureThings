@@ -23,15 +23,14 @@ public class ItemSetup {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, FutureThings.MOD_ID);
 
-    public static final Supplier<Item> EXAMPLE_BLOCK_ITEM = ITEMS.register("example_block", () ->
-            new BlockItem(BlockSetup.EXAMPLE_BLOCK.get(), new Item.Properties()));
+    public static final Supplier<Item> HOLOGRAM_PROJECTOR_ITEM = ITEMS.register("hologram_projector", () ->
+            new BlockItem(BlockSetup.HOLOGRAM_PROJECTOR.get(), new Item.Properties()));
 
     public static final Supplier<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () ->
             new Item(new Item.Properties()/*.food(new FoodProperties.Builder().alwaysEdible().nutrition(1).saturationModifier(2f).build())*/));
 
-
     public static void addItems(CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         output.accept(ItemSetup.EXAMPLE_ITEM.get());
-        output.accept(ItemSetup.EXAMPLE_BLOCK_ITEM.get());
+        output.accept(ItemSetup.HOLOGRAM_PROJECTOR_ITEM.get());
     }
 }
