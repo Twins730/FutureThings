@@ -3,8 +3,8 @@
 #moj_import <fog.glsl>
 
 uniform sampler2D Sampler0;
-
-uniform vec4 ColorModulator;
+        
+uniform float Time;
 uniform float FogStart;
 uniform float FogEnd;
 uniform vec4 FogColor;
@@ -23,7 +23,7 @@ void main() {
         discard;
     }
     float value = (color.r + color.g + color.b) / 3;
-    vec4 colorgrayscale = vec4(value, value, value, color.a);
+    vec4 colorgrayscale = vec4(value / 4, value / 2, value, (pow(sin((texCoord0.y * 3.14159265359) * 50 + Time) / 2, 2) + 0.60));
 
     fragColor = linear_fog(colorgrayscale, vertexDistance, FogStart, FogEnd, FogColor);
 }

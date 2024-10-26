@@ -5,10 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "future_things.refmap.json",
   "mixins": [
-    "EntityMixin"
   ],
   "client": [
-
+    "ShaderInstanceMixin"
   ],
   "injectors": {
     "defaultRequire": 1

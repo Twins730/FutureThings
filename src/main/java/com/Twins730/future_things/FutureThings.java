@@ -13,17 +13,25 @@ import net.minecraft.Util;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.RegisterShadersEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
+import java.io.IOException;
+import java.util.Objects;
 import java.util.function.Function;
 
 @Mod(FutureThings.MOD_ID)
@@ -40,9 +48,8 @@ public class FutureThings {
         BlockEntitySetup.BLOCK_ENTITY_TYPES.register(modEventBus);
         modEventBus.addListener(BlockEntitySetup::registerEntityRenderers);
 
-       // NeoForge.EVENT_BUS.register(this);
+        //NeoForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
-        modEventBus.addListener(ShadersSetup::registerShaders);
 
         FutureThings.LOGGER.info("Future things has been setup successfully.");
     }
@@ -51,10 +58,22 @@ public class FutureThings {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) event.accept(ItemSetup.HOLOGRAM_PROJECTOR_ITEM.get());
     }
 
+    @EventBusSubscriber(value = Dist.CLIENT, modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+    public static class ClientEvents {
+        @Nullable
+        private static ShaderInstance entityHologramShader;
 
+        public static ShaderInstance getEntityHologramShader() {
+            return Objects.requireNonNull(entityHologramShader, "getEntityHologramShader() was null!");
+        }
 
-
-
+        @SubscribeEvent
+        public static void registerShaders(RegisterShadersEvent event) throws IOException {
+            event.registerShader(new ShaderInstance(event.getResourceProvider(), ResourceLocation.fromNamespaceAndPath(MOD_ID, "rendertype_hologram_cutout"), DefaultVertexFormat.NEW_ENTITY), (p_172645_) -> {
+                entityHologramShader = p_172645_;
+            });
+        }
+    }
 
 
 }
