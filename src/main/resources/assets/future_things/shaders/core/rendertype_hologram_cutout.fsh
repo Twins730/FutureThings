@@ -23,7 +23,7 @@ void main() {
         discard;
     }
     float value = (color.r + color.g + color.b) / 3;
-    vec4 colorgrayscale = vec4(value / 4, value / 2, value, (pow(sin((texCoord0.y * 3.14159265359) * 50 + Time) / 2, 2) + 0.60));
+    vec4 colorgrayscale = vec4(0, value, value, (pow(sin((texCoord0.y * 3.14159265359) * 50 + Time) / 2, 2) + 0.60));
 
     fragColor = linear_fog(colorgrayscale, vertexDistance, FogStart, FogEnd, FogColor);
 }

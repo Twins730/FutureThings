@@ -37,7 +37,7 @@ public abstract class ShaderInstanceMixin implements Shader, AutoCloseable {
     @Inject(method = "setDefaultUniforms", at = @At("TAIL"))
     private void setDefaultUniforms(VertexFormat.Mode mode, Matrix4f projectionMatrix, Matrix4f frustrumMatrix, Window window, CallbackInfo ci){
         if(futureThings$TIME != null) {
-            this.futureThings$tick += 0.01f;
+            this.futureThings$tick += 0.05f;
             if(futureThings$tick > Math.PI){
                 this.futureThings$tick = 0;
             }

@@ -15,9 +15,8 @@ public class BlockEntitySetup {
 
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, FutureThings.MOD_ID);
 
-    public static final Supplier<BlockEntityType<HologramProjectorBlockEntity>> HOLOGRAM_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("my_block_entity", () ->
+    public static final Supplier<BlockEntityType<HologramProjectorBlockEntity>> HOLOGRAM_BLOCK_ENTITY = BLOCK_ENTITY_TYPES.register("hologram_block_entity", () ->
             BlockEntityType.Builder.of(HologramProjectorBlockEntity::new, BlockSetup.HOLOGRAM_PROJECTOR.get()).build(null));
-
 
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(BlockEntitySetup.HOLOGRAM_BLOCK_ENTITY.get(), HologramProjectorBlockEntityRenderer::new);

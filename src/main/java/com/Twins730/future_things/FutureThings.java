@@ -1,10 +1,8 @@
 package com.Twins730.future_things;
 
-import com.Twins730.future_things.setup.BlockEntitySetup;
-import com.Twins730.future_things.setup.BlockSetup;
-import com.Twins730.future_things.setup.ItemSetup;
+import com.Twins730.future_things.menu.HologramScreen;
+import com.Twins730.future_things.setup.*;
 
-import com.Twins730.future_things.setup.ShadersSetup;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.logging.LogUtils;
@@ -24,6 +22,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -46,12 +45,18 @@ public class FutureThings {
         ItemSetup.ITEMS.register(modEventBus);
         ItemSetup.CREATIVE_MODE_TABS.register(modEventBus);
         BlockEntitySetup.BLOCK_ENTITY_TYPES.register(modEventBus);
+        MenuSetup.MENUS.register(modEventBus);
         modEventBus.addListener(BlockEntitySetup::registerEntityRenderers);
 
         //NeoForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
+        modEventBus.addListener(this::registerScreens);
 
         FutureThings.LOGGER.info("Future things has been setup successfully.");
+    }
+
+    private void registerScreens(RegisterMenuScreensEvent event) {
+        event.register(MenuSetup.HOLOGRAM_MENU.get(), HologramScreen::new);
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {

@@ -17,6 +17,6 @@ public class BlockSetup {
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, FutureThings.MOD_ID);
 
-    public static final Supplier<Block> HOLOGRAM_PROJECTOR = BLOCKS.register("hologram_projector", () -> new HologramProjectorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
+    public static final Supplier<Block> HOLOGRAM_PROJECTOR = BLOCKS.register("hologram_projector", () -> new HologramProjectorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).noOcclusion()));
 
 }
