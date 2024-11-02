@@ -10,6 +10,7 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -88,6 +89,22 @@ public class HologramProjectorBlockEntity extends BlockEntity implements Contain
         return true;
     }
 
+    private void markUpdated() {
+        this.setChanged();
+        this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+    }
+
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag compoundtag = new CompoundTag();
+        ContainerHelper.saveAllItems(compoundtag, this.items, true, registries);
+        return compoundtag;
+    }
+
     private NonNullList<ItemStack> getItems() {
         return items;
     }
@@ -101,7 +118,7 @@ public class HologramProjectorBlockEntity extends BlockEntity implements Contain
     public ItemStack removeItem(int slot, int amount) {
         ItemStack itemstack = ContainerHelper.removeItem(this.getItems(), slot, amount);
         if (!itemstack.isEmpty()) {
-            this.setChanged();
+            this.markUpdated();
         }
 
         return itemstack;
@@ -109,14 +126,16 @@ public class HologramProjectorBlockEntity extends BlockEntity implements Contain
 
     @Override
     public ItemStack removeItemNoUpdate(int slot) {
-        return ContainerHelper.takeItem(this.getItems(), slot);
+        ItemStack stack = ContainerHelper.takeItem(this.getItems(), slot);
+        this.markUpdated();
+        return stack;
     }
 
     @Override
     public void setItem(int slot, ItemStack stack) {
         this.getItems().set(slot, stack);
         stack.limitSize(this.getMaxStackSize(stack));
-        this.setChanged();
+        this.markUpdated();
     }
 
     /**

@@ -1,18 +1,13 @@
 package com.Twins730.future_things;
 
+import ca.weblite.objc.Client;
 import com.Twins730.future_things.menu.HologramScreen;
 import com.Twins730.future_things.setup.*;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.logging.LogUtils;
 
-import net.minecraft.Util;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 
@@ -22,10 +17,12 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -38,6 +35,7 @@ public class FutureThings {
 
     public static final String MOD_ID = "future_things";
     public static final Logger LOGGER = LogUtils.getLogger();
+    public static float PI_TIME = 0;
 
     // Mod container
     public FutureThings(IEventBus modEventBus, ModContainer container) {
@@ -52,6 +50,9 @@ public class FutureThings {
         modEventBus.addListener(this::addCreative);
         modEventBus.addListener(this::registerScreens);
 
+        NeoForge.EVENT_BUS.addListener(this::clientTick);
+
+
         FutureThings.LOGGER.info("Future things has been setup successfully.");
     }
 
@@ -61,6 +62,13 @@ public class FutureThings {
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) event.accept(ItemSetup.HOLOGRAM_PROJECTOR_ITEM.get());
+    }
+
+    public void clientTick(ClientTickEvent.Post event){
+            FutureThings.PI_TIME += 0.1f;
+            if (PI_TIME > Math.PI * 2) {
+                FutureThings.PI_TIME = 0;
+            }
     }
 
     @EventBusSubscriber(value = Dist.CLIENT, modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -78,6 +86,8 @@ public class FutureThings {
                 entityHologramShader = p_172645_;
             });
         }
+
+
     }
 
 

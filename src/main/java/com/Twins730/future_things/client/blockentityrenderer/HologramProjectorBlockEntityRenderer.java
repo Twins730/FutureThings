@@ -1,5 +1,6 @@
 package com.Twins730.future_things.client.blockentityrenderer;
 
+import com.Twins730.future_things.FutureThings;
 import com.Twins730.future_things.block.blockentity.HologramProjectorBlockEntity;
 import com.Twins730.future_things.setup.ShadersSetup;
 
@@ -16,46 +17,53 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.phys.AABB;
 
 
-import static net.minecraft.client.renderer.texture.OverlayTexture.pack;
+import java.util.Random;
 
+import static net.minecraft.client.renderer.texture.OverlayTexture.pack;
 
 public class HologramProjectorBlockEntityRenderer implements BlockEntityRenderer<HologramProjectorBlockEntity> {
     private final EntityRenderDispatcher entityRenderer;
     private Entity entity;
+    private float spin = 0;
 
     public HologramProjectorBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
         this.entityRenderer = context.getEntityRenderer();
-
     }
 
     @Override
     public void render(HologramProjectorBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         if(Minecraft.getInstance().player != null) {
+            if(blockEntity.getItem(0).getItem() instanceof SpawnEggItem) {
+                this.entity =  ((SpawnEggItem) blockEntity.getItem(0).getItem()).getDefaultType().create(blockEntity.getLevel());
+                if(entity instanceof Mob){
+                    ((Mob)this.entity).setBaby(false);
+                    this.entity.setXRot(0);
+                    this.entity.setYRot(0);
+                }
+                if(spin > 360){
+                    this.spin = 0;
+                }
+                this.spin += 0.05f;
 
-            if(entity == null){
-                this.entity = EntityType.RAVAGER.create(blockEntity.getLevel());
-                this.entity.setYHeadRot(0);
-                this.entity.setXRot(0);
+                poseStack.pushPose();
+                poseStack.translate(0.5F, 2.5f + Math.sin(FutureThings.PI_TIME / 2) / 50, 0.5F);
+                poseStack.scale(1f, 1f, 1f);
+                poseStack.mulPose(Axis.XP.rotationDegrees(180.0f));
+                poseStack.mulPose(Axis.YP.rotationDegrees(spin));
+
+                if (entityRenderer.getRenderer(entity) instanceof LivingEntityRenderer) {
+                    EntityModel<LivingEntity> model = ((LivingEntityRenderer) entityRenderer.getRenderer(entity)).getModel();
+                    model.setupAnim((LivingEntity) entity, 0, 0, 0, 0, 0);
+                    model.renderToBuffer(poseStack, bufferSource.getBuffer(this.renderType(entityRenderer.getRenderer(entity).getTextureLocation(entity))), 226, pack(0, 10));
+                }
+                poseStack.popPose();
             }
-
-            poseStack.pushPose();
-            poseStack.translate(0.5F, 3.0f, 0.5F);
-            poseStack.scale(1f,1f,1f);
-            poseStack.mulPose(Axis.XP.rotationDegrees(180.0f));
-
-            if(entityRenderer.getRenderer(entity) instanceof LivingEntityRenderer) {
-                EntityModel<LivingEntity> model = ((LivingEntityRenderer) entityRenderer.getRenderer(entity)).getModel();
-                model.setupAnim((LivingEntity) entity, 0,0,0,0,0);
-
-                model.renderToBuffer(poseStack, bufferSource.getBuffer(this.renderType(entityRenderer.getRenderer(entity).getTextureLocation(entity))), 226, pack(0, 10));
-            }
-            poseStack.popPose();
-
         }
     }
 
