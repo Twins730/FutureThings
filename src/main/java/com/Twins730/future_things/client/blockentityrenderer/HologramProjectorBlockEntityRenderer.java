@@ -22,9 +22,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.phys.AABB;
 
-
-import java.util.Random;
-
 import static net.minecraft.client.renderer.texture.OverlayTexture.pack;
 
 public class HologramProjectorBlockEntityRenderer implements BlockEntityRenderer<HologramProjectorBlockEntity> {

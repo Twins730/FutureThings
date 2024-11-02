@@ -1,0 +1,6 @@
+{
+  "parent": "future_things:templates/horizontal_middle",
+  "textures": {
+    "all": "future_things:block/polymer_block"
+  }
+}

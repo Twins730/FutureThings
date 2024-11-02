@@ -1,7 +1,66 @@
 {
   "variants": {
-    "": {
+    "type=none": {
       "model": "future_things:block/polymer_block"
+    },
+    "type=north": {
+      "model": "future_things:block/polymer_block_end",
+      "y": 180
+    },
+    "type=east": {
+      "model": "future_things:block/polymer_block_end",
+      "y": 270
+    },
+    "type=south": {
+      "model": "future_things:block/polymer_block_end",
+      "y": 0
+    },
+    "type=west": {
+      "model": "future_things:block/polymer_block_end",
+      "y": 90
+    },
+    "type=horizontal_east_west": {
+      "model": "future_things:block/polymer_block_middle",
+      "y": 0
+    },
+    "type=horizontal_north_south": {
+      "model": "future_things:block/polymer_block_middle",
+      "y": 90
+    },
+    "type=corner_east_south": {
+      "model": "future_things:block/polymer_block_corner",
+      "y": 0
+    },
+    "type=corner_west_south": {
+      "model": "future_things:block/polymer_block_corner",
+      "y": 90
+    },
+    "type=corner_north_east": {
+      "model": "future_things:block/polymer_block_corner",
+      "y": 270
+    },
+    "type=corner_north_west": {
+      "model": "future_things:block/polymer_block_corner",
+      "y": 180
+    },
+    "type=three_north": {
+      "model": "future_things:block/polymer_block_three",
+      "y": 0
+    },
+    "type=three_east": {
+      "model": "future_things:block/polymer_block_three",
+      "y": 90
+    },
+    "type=three_south": {
+      "model": "future_things:block/polymer_block_three",
+      "y": 180
+    },
+    "type=three_west": {
+      "model": "future_things:block/polymer_block_three",
+      "y": 270
+    },
+    "type=center": {
+      "model": "future_things:block/polymer_block_all"
     }
   }
 }
