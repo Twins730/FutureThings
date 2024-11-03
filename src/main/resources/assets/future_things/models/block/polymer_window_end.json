@@ -1,0 +1,7 @@
+{
+  "parent": "future_things:templates/horizontal_end",
+  "render_type": "cutout",
+  "textures": {
+    "all": "future_things:block/polymer_glass"
+  }
+}
