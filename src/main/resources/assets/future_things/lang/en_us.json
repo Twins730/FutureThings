@@ -2,9 +2,13 @@
   "container.future_things.hologram_block_entity": "Hologram Projector",
   "item.future_things.regenerating_gelatin": "Regenerating Gelatin",
   "item.future_things.eaten_regenerating_gelatin": "Eaten Regenerating Gelatin",
+  "item.future_things.bio_chip": "Bio Chip",
 
   "block.future_things.hologram_projector": "Hologram",
   "block.future_things.polymer_floor": "Polymer Floor",
   "block.future_things.polymer_block": "Polymer Block",
-  "block.future_things.polymer_window": "Polymer Window"
+  "block.future_things.polymer_window": "Polymer Window",
+  "block.future_things.polymer_lamp": "Polymer Lamp",
+  "future_things.bio_chip.stored_bio": "Stored Bio:",
+  "future_things.bio_chip.captured_bio": "Captured Entity Bio:"
 }

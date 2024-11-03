@@ -2,6 +2,8 @@ package com.Twins730.future_things.setup;
 
 import com.Twins730.future_things.FutureThings;
 
+import com.Twins730.future_things.item.BioChipItem;
+import com.Twins730.future_things.item.BioChipRecord;
 import com.Twins730.future_things.item.EatenRegeneratingGelatin;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.food.FoodProperties;
@@ -49,6 +51,8 @@ public class ItemSetup {
     public static final Supplier<Item> REGENERATING_GELATIN = ITEMS.register("regenerating_gelatin", () ->
             new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEdible().nutrition(1).saturationModifier(2f).usingConvertsTo(EATEN_REGENERATING_GELATIN.get()).build())));
 
+    public static final Supplier<BioChipItem> BIO_CHIP = ITEMS.register("bio_chip", () ->
+            new BioChipItem(new BioChipItem.Properties().component(DataComponentSetup.BIO_CHIP_DATA.value(), new BioChipRecord(""))));
 
     public static void addItems(CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
         output.accept(ItemSetup.POLYMER_BLOCK_ITEM.get());

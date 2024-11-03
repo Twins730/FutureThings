@@ -1,14 +1,19 @@
 package com.Twins730.future_things;
 
 import ca.weblite.objc.Client;
+import com.Twins730.future_things.item.BioChipItem;
+import com.Twins730.future_things.item.BioChipRecord;
 import com.Twins730.future_things.menu.HologramScreen;
 import com.Twins730.future_things.setup.*;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.logging.LogUtils;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.CreativeModeTabs;
 
 import net.neoforged.api.distmarker.Dist;
@@ -23,6 +28,8 @@ import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
+import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -39,6 +46,7 @@ public class FutureThings {
 
     // Mod container
     public FutureThings(IEventBus modEventBus, ModContainer container) {
+        DataComponentSetup.DATA_COMPONENTS.register(modEventBus);
         BlockSetup.BLOCKS.register(modEventBus);
         ItemSetup.ITEMS.register(modEventBus);
         ItemSetup.CREATIVE_MODE_TABS.register(modEventBus);
@@ -46,14 +54,24 @@ public class FutureThings {
         MenuSetup.MENUS.register(modEventBus);
         modEventBus.addListener(BlockEntitySetup::registerEntityRenderers);
 
-        //NeoForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
         modEventBus.addListener(this::registerScreens);
 
         NeoForge.EVENT_BUS.addListener(this::clientTick);
-
+        NeoForge.EVENT_BUS.addListener(this::interactLivingEvent);
 
         FutureThings.LOGGER.info("Future things has been setup successfully.");
+    }
+
+
+    private void interactLivingEvent(PlayerInteractEvent.EntityInteract event){
+        if(event.getEntity().getItemInHand(event.getHand()).getItem() == ItemSetup.BIO_CHIP.get()){
+            event.getEntity().getItemInHand(event.getHand()).set(DataComponentSetup.BIO_CHIP_DATA, new BioChipRecord(event.getTarget().getType().getDescriptionId()));
+            event.getEntity()
+                    .displayClientMessage(Component.translatable("future_things.bio_chip.captured_bio").withStyle(ChatFormatting.GRAY)
+                    .append(Component.translatable(event.getTarget().getType().getDescriptionId())).withStyle(ChatFormatting.LIGHT_PURPLE), false);
+        }
+
     }
 
     private void registerScreens(RegisterMenuScreensEvent event) {
