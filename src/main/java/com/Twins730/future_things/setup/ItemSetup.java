@@ -41,7 +41,7 @@ public class ItemSetup {
             new EatenRegeneratingGelatin(new Item.Properties()));
 
     public static final Supplier<Item> REGENERATING_GELATIN = ITEMS.register("regenerating_gelatin", () ->
-            new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEdible().nutrition(1).saturationModifier(2f).usingConvertsTo(EATEN_REGENERATING_GELATIN.get()).build()).stacksTo(1)));
+            new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEdible().nutrition(4).saturationModifier(2f).usingConvertsTo(EATEN_REGENERATING_GELATIN.get()).build()).stacksTo(1)));
 
     public static final Supplier<BioChipItem> BIO_CHIP = ITEMS.register("bio_chip", () ->
             new BioChipItem(new BioChipItem.Properties().component(DataComponentSetup.BIO_CHIP_DATA.value(), new BioChipRecord("")).stacksTo(1)));

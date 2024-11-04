@@ -10,6 +10,7 @@
   "block.future_things.polymer_block": "Polymer Block",
   "block.future_things.polymer_window": "Polymer Window",
   "block.future_things.polymer_lamp": "Polymer Lamp",
+  "block.future_things.polymer_door": "Polymer Door",
   "future_things.bio_chip.stored_bio": "Stored Bio: ",
   "future_things.bio_chip.captured_bio": "Captured Entity Bio: "
 }

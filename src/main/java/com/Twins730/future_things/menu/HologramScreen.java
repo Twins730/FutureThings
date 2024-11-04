@@ -1,15 +1,15 @@
 package com.Twins730.future_things.menu;
 
+import com.Twins730.future_things.FutureThings;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-
 public class HologramScreen extends AbstractContainerScreen<HologramMenu> {
 
-    private static final ResourceLocation CONTAINER_LOCATION = ResourceLocation.withDefaultNamespace("textures/gui/container/dispenser.png");
+    private static final ResourceLocation CONTAINER_LOCATION = ResourceLocation.fromNamespaceAndPath(FutureThings.MOD_ID,"textures/gui/hologram_projector.png");
 
     public HologramScreen(HologramMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);

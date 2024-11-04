@@ -28,5 +28,4 @@ public class BlockSetup {
             new PolymerWindow(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).noOcclusion()));
     public static final Supplier<Block> POLYMER_LAMP = BLOCKS.register("polymer_lamp", () ->
             new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.SEA_LANTERN).noOcclusion().emissiveRendering((state, level, pos) -> true)));
-
 }
