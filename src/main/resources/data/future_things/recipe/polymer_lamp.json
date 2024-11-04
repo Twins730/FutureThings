@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "food",
+  "pattern": [
+    " X ",
+    "XGX",
+    " X "
+  ],
+  "key": {
+    "X": {
+      "item": "future_things:polymer_brick"
+    },
+    "G": {
+      "item": "minecraft:redstone_lamp"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "future_things:polymer_lamp"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "food",
+  "pattern": [
+    "XGX"
+  ],
+  "key": {
+    "X": {
+      "item": "future_things:polymer_brick"
+    },
+    "G": {
+      "item": "minecraft:ink_sac"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "future_things:polymer_floor"
+  }
+}

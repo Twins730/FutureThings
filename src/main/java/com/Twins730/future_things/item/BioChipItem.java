@@ -20,15 +20,6 @@ public class BioChipItem extends Item {
         if(stack.get(DataComponentSetup.BIO_CHIP_DATA) != null) {
             tooltipComponents.add(Component.translatable("future_things.bio_chip.stored_bio").append(Component.translatable(stack.get(DataComponentSetup.BIO_CHIP_DATA).entity_type())));
         }
-
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
-
-    public String getEntityID(ItemStack stack){
-        if(stack.get(DataComponentSetup.BIO_CHIP_DATA) != null){
-            return stack.get(DataComponentSetup.BIO_CHIP_DATA).entity_type();
-        }
-        return "";
-    }
-
 }

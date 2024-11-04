@@ -1,7 +1,5 @@
 package com.Twins730.future_things;
 
-import ca.weblite.objc.Client;
-import com.Twins730.future_things.item.BioChipItem;
 import com.Twins730.future_things.item.BioChipRecord;
 import com.Twins730.future_things.menu.HologramScreen;
 import com.Twins730.future_things.setup.*;
@@ -13,7 +11,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.CreativeModeTabs;
 
 import net.neoforged.api.distmarker.Dist;
@@ -27,15 +24,12 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-
-import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-
 import java.io.IOException;
 import java.util.Objects;
-import java.util.function.Function;
 
 @Mod(FutureThings.MOD_ID)
 public class FutureThings {
@@ -52,26 +46,26 @@ public class FutureThings {
         ItemSetup.CREATIVE_MODE_TABS.register(modEventBus);
         BlockEntitySetup.BLOCK_ENTITY_TYPES.register(modEventBus);
         MenuSetup.MENUS.register(modEventBus);
-        modEventBus.addListener(BlockEntitySetup::registerEntityRenderers);
 
+        modEventBus.addListener(BlockEntitySetup::registerEntityRenderers);
         modEventBus.addListener(this::addCreative);
         modEventBus.addListener(this::registerScreens);
 
         NeoForge.EVENT_BUS.addListener(this::clientTick);
         NeoForge.EVENT_BUS.addListener(this::interactLivingEvent);
 
-        FutureThings.LOGGER.info("Future things has been setup successfully.");
+        FutureThings.LOGGER.info("Future Things has been setup successfully.");
     }
 
-
-    private void interactLivingEvent(PlayerInteractEvent.EntityInteract event){
-        if(event.getEntity().getItemInHand(event.getHand()).getItem() == ItemSetup.BIO_CHIP.get()){
+    private void interactLivingEvent(PlayerInteractEvent.EntityInteract event) {
+        if (event.getEntity().getItemInHand(event.getHand()).getItem() == ItemSetup.BIO_CHIP.get()) {
             event.getEntity().getItemInHand(event.getHand()).set(DataComponentSetup.BIO_CHIP_DATA, new BioChipRecord(event.getTarget().getType().getDescriptionId()));
-            event.getEntity()
-                    .displayClientMessage(Component.translatable("future_things.bio_chip.captured_bio").withStyle(ChatFormatting.GRAY)
-                    .append(Component.translatable(event.getTarget().getType().getDescriptionId())).withStyle(ChatFormatting.LIGHT_PURPLE), false);
+            if (event.getEntity().level().isClientSide()) {
+                event.getEntity()
+                        .displayClientMessage(Component.translatable("future_things.bio_chip.captured_bio").withStyle(ChatFormatting.GRAY)
+                                .append(Component.translatable(event.getTarget().getType().getDescriptionId())).withStyle(ChatFormatting.LIGHT_PURPLE), false);
+            }
         }
-
     }
 
     private void registerScreens(RegisterMenuScreensEvent event) {
@@ -79,14 +73,15 @@ public class FutureThings {
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) event.accept(ItemSetup.HOLOGRAM_PROJECTOR_ITEM.get());
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
+            event.accept(ItemSetup.HOLOGRAM_PROJECTOR_ITEM.get());
     }
 
-    public void clientTick(ClientTickEvent.Post event){
-            FutureThings.PI_TIME += 0.1f;
-            if (PI_TIME > Math.PI * 2) {
-                FutureThings.PI_TIME = 0;
-            }
+    public void clientTick(ClientTickEvent.Post event) {
+        FutureThings.PI_TIME += 0.1f;
+        if (PI_TIME > Math.PI * 2) {
+            FutureThings.PI_TIME = 0;
+        }
     }
 
     @EventBusSubscriber(value = Dist.CLIENT, modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -104,9 +99,5 @@ public class FutureThings {
                 entityHologramShader = p_172645_;
             });
         }
-
-
     }
-
-
 }

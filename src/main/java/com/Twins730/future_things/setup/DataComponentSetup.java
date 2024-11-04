@@ -1,17 +1,20 @@
 package com.Twins730.future_things.setup;
 
-
 import com.Twins730.future_things.FutureThings;
 import com.Twins730.future_things.item.BioChipRecord;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.netty.buffer.ByteBuf;
+
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import io.netty.buffer.ByteBuf;
 
 public class DataComponentSetup {
 

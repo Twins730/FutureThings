@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "food",
+  "pattern": [
+    " X ",
+    "X X",
+    " X "
+  ],
+  "key": {
+    "X": {
+      "item": "future_things:polymer_brick"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "future_things:polymer_block"
+  }
+}

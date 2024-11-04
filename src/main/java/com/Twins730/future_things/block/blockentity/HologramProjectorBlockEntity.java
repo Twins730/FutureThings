@@ -17,7 +17,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
-
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -29,6 +28,7 @@ public class HologramProjectorBlockEntity extends BlockEntity implements Contain
     private Component name;
     public static final int SIZE = 1;
     private final NonNullList<ItemStack> items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
+    public boolean isActuallyEmpty = false;
 
     public HologramProjectorBlockEntity(BlockPos pos, BlockState blockState) {
         super(BlockEntitySetup.HOLOGRAM_BLOCK_ENTITY.get(), pos, blockState);
@@ -42,6 +42,7 @@ public class HologramProjectorBlockEntity extends BlockEntity implements Contain
             this.name = parseCustomNameSafe(tag.getString("CustomName"), registries);
         }
         ContainerHelper.loadAllItems(tag, items, registries);
+        this.isActuallyEmpty = tag.getBoolean("actually_empty");
     }
 
     @Override
@@ -90,6 +91,7 @@ public class HologramProjectorBlockEntity extends BlockEntity implements Contain
     }
 
     private void markUpdated() {
+        this.isActuallyEmpty = items.get(0).isEmpty();
         this.setChanged();
         this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
     }
@@ -102,6 +104,9 @@ public class HologramProjectorBlockEntity extends BlockEntity implements Contain
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag compoundtag = new CompoundTag();
         ContainerHelper.saveAllItems(compoundtag, this.items, true, registries);
+        this.isActuallyEmpty = items.get(0).isEmpty();
+        compoundtag.putBoolean("actually_empty", isActuallyEmpty);
+
         return compoundtag;
     }
 
@@ -138,9 +143,6 @@ public class HologramProjectorBlockEntity extends BlockEntity implements Contain
         this.markUpdated();
     }
 
-    /**
-     * Don't rename this method to canInteractWith due to conflicts with Container
-     */
     @Override
     public boolean stillValid(Player player) {
         return Container.stillValidBlockEntity(this, player);

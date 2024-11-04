@@ -21,5 +21,4 @@ public class BlockEntitySetup {
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(BlockEntitySetup.HOLOGRAM_BLOCK_ENTITY.get(), HologramProjectorBlockEntityRenderer::new);
     }
-
 }

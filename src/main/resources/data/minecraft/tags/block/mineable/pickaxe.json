@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "future_things:polymer_block",
+    "future_things:polymer_floor",
+    "future_things:polymer_window",
+    "future_things:polymer_lamp",
+    "future_things:hologram_projector"
+  ]
+}

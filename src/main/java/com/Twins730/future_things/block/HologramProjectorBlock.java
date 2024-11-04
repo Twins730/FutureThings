@@ -1,8 +1,9 @@
 package com.Twins730.future_things.block;
 
 import com.Twins730.future_things.block.blockentity.HologramProjectorBlockEntity;
+
 import net.minecraft.core.BlockPos;
-import net.minecraft.stats.Stats;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -35,5 +36,11 @@ public class HologramProjectorBlock extends Block implements EntityBlock {
             }
             return InteractionResult.CONSUME;
         }
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        Containers.dropContentsOnDestroy(state, newState, level, pos);
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 }

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {"item": "minecraft:popped_chorus_fruit"},
+    {"item": "minecraft:white_dye"}
+  ],
+  "result": {
+    "count": 1,
+    "id": "future_things:polymer_brick"
+  }
+}

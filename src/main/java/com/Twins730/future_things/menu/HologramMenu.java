@@ -1,12 +1,15 @@
 package com.Twins730.future_things.menu;
 
 import com.Twins730.future_things.setup.MenuSetup;
+
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+
+import org.jetbrains.annotations.NotNull;
 
 public class HologramMenu extends AbstractContainerMenu {
 
@@ -35,29 +38,22 @@ public class HologramMenu extends AbstractContainerMenu {
         }
     }
 
-    /**
-     * Determines whether supplied player can use this container
-     */
     @Override
     public boolean stillValid(Player player) {
         return this.dispenser.stillValid(player);
     }
 
-    /**
-     * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player inventory and the other inventory(s).
-     */
     @Override
-    public ItemStack quickMoveStack(Player player, int index) {
+    public @NotNull ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
             if (index == 0) {
                 if (!this.moveItemStackTo(itemstack1, 1, 37, true)) {
                     return ItemStack.EMPTY;
                 }
-
                 slot.onQuickCraft(itemstack1, itemstack);
             } else if (this.moveItemStackTo(itemstack1, 0, 1, false)) { //Forge Fix Shift Clicking in beacons with stacks larger then 1.
                 return ItemStack.EMPTY;
@@ -72,30 +68,22 @@ public class HologramMenu extends AbstractContainerMenu {
             } else if (!this.moveItemStackTo(itemstack1, 1, 37, false)) {
                 return ItemStack.EMPTY;
             }
-
             if (itemstack1.isEmpty()) {
                 slot.setByPlayer(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
-
             if (itemstack1.getCount() == itemstack.getCount()) {
                 return ItemStack.EMPTY;
             }
-
             slot.onTake(player, itemstack1);
         }
-
         return itemstack;
     }
 
-    /**
-     * Called when the container is closed.
-     */
     @Override
     public void removed(Player player) {
         super.removed(player);
         this.dispenser.stopOpen(player);
     }
-
 }

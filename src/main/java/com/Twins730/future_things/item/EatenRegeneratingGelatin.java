@@ -1,6 +1,7 @@
 package com.Twins730.future_things.item;
 
 import com.Twins730.future_things.setup.ItemSetup;
+
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -26,6 +27,5 @@ public class EatenRegeneratingGelatin extends Item {
         }
         this.regenCountdownTicks++;
         super.inventoryTick(stack, level, entity, slotId, isSelected);
-
     }
 }
