@@ -5,6 +5,7 @@ import com.Twins730.future_things.item.BioChipItem;
 import com.Twins730.future_things.item.BioChipRecord;
 import com.Twins730.future_things.item.EatenRegeneratingGelatin;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 
@@ -16,8 +17,8 @@ public class ItemSetup {
 
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, FutureThings.MOD_ID);
 
-    public static final Supplier<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("future_things", () ->
-            CreativeModeTab.builder().withTabsBefore(CreativeModeTabs.COMBAT).icon(() ->
+    public static final Supplier<CreativeModeTab> FUTURE_THINGS_TAB = CREATIVE_MODE_TABS.register("future_things", () ->
+            CreativeModeTab.builder().title(Component.translatable("future_things.itemGroup.future_things")).icon(() ->
                     ItemSetup.REGENERATING_GELATIN.get().getDefaultInstance()).displayItems(ItemSetup::addItems).build());
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, FutureThings.MOD_ID);
