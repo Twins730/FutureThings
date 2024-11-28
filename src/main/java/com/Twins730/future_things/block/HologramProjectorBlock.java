@@ -32,7 +32,9 @@ public class HologramProjectorBlock extends Block implements EntityBlock {
         } else {
             BlockEntity blockentity = level.getBlockEntity(pos);
             if (blockentity instanceof HologramProjectorBlockEntity) {
-                player.openMenu((HologramProjectorBlockEntity)blockentity);
+                if(((HologramProjectorBlockEntity) blockentity).canOpen(player)) {
+                    player.openMenu((HologramProjectorBlockEntity) blockentity);
+                }
             }
             return InteractionResult.CONSUME;
         }

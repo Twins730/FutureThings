@@ -17,17 +17,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public class HologramProjectorBlockEntity extends BlockEntity implements Container, MenuProvider, Nameable {
+public class HologramProjectorBlockEntity extends BaseContainerBlockEntity implements Container, MenuProvider, Nameable {
 
     @Nullable
     private Component name;
     public static final int SIZE = 1;
-    private final NonNullList<ItemStack> items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
+    private NonNullList<ItemStack> items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
     public boolean isActuallyEmpty = false;
 
     public HologramProjectorBlockEntity(BlockPos pos, BlockState blockState) {
@@ -59,7 +61,7 @@ public class HologramProjectorBlockEntity extends BlockEntity implements Contain
         return this.name != null ? this.name : this.getDefaultName();
     }
 
-    private Component getDefaultName() {
+    public Component getDefaultName() {
         return Component.translatable("container.future_things.hologram_block_entity");
     }
 
@@ -110,8 +112,14 @@ public class HologramProjectorBlockEntity extends BlockEntity implements Contain
         return compoundtag;
     }
 
-    private NonNullList<ItemStack> getItems() {
+    public NonNullList<ItemStack> getItems() {
         return items;
+    }
+
+    @Override
+    protected void setItems(NonNullList<ItemStack> items) {
+        this.items = items;
+        this.markUpdated();
     }
 
     @Override
@@ -157,6 +165,11 @@ public class HologramProjectorBlockEntity extends BlockEntity implements Contain
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
         return new HologramMenu(containerId, playerInventory, this);
+    }
+
+    @Override
+    protected @NotNull AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
+        return new HologramMenu(containerId, inventory, this);
     }
 
     @Override
